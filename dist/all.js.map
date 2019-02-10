@@ -1,0 +1,1 @@
+{"version":3,"sources":["csv.js"],"names":["d3","csv","then","data","console","log"],"mappings":";;AAEAA,EAAE,CAACC,GAAH,CAAO,mBAAP,EAA4BC,IAA5B,CAAiC,UAASC,IAAT,EAAe;AAC9CC,EAAAA,OAAO,CAACC,GAAR,CAAYF,IAAZ;AACD,CAFD","file":"all.js","sourcesContent":["\n\nd3.csv('/app/csv/test.csv').then(function(data) {\n  console.log(data)\n})\n"]}

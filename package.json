@@ -1,0 +1,33 @@
+{
+  "name": "pictograph",
+  "version": "1.0.0",
+  "description": "A simple tool to upload a csv and generate a pictograph",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kromoser/pictograph.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kromoser/pictograph/issues"
+  },
+  "homepage": "https://github.com/kromoser/pictograph#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "acorn": "^6.1.0",
+    "babel-cli": "^6.26.0",
+    "d3": "^5.9.1",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0-beta.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-webserver": "^0.9.1",
+    "webpack-stream": "^5.2.1"
+  }
+}
