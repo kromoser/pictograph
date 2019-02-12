@@ -1,38 +1,60 @@
 "use strict";
 
-function createList() {
-  var graphContainer = document.querySelector('#vis-container'); // Take CSV, split into row objects, and push them into array
+// handle upload button
+function upload_button(el, callback) {
+  var uploader = document.getElementById(el);
+  var reader = new FileReader();
 
-  d3.csv('/app/csv/test.csv').then(function (data) {
-    console.log(data);
-    var columnOne = data.columns[0];
-    var columnTwo = data.columns[1]; // Get total counts from column two for use in percentages
+  reader.onload = function (e) {
+    var contents = e.target.result;
+    callback(contents);
+  };
 
-    var reducer = function reducer(accumulator, currentValue) {
-      return accumulator + parseInt(currentValue[columnTwo]);
-    };
+  uploader.addEventListener("change", handleFiles, false);
 
-    var totalCount = data.reduce(reducer, 0);
-    data.forEach(function (element) {
-      var node = document.createElement('LI'); // Get each value to be normalized to a distribution between 1 and 10
+  function handleFiles() {
+    var file = this.files[0];
+    reader.readAsText(file);
+  }
 
-      var symbolTotal = Math.round(element[columnTwo] / totalCount * 10);
-      var label = document.createTextNode(element[columnOne] + ': ');
-      var totals = document.createTextNode('Totals:' + element[columnTwo] + '/' + totalCount + ')');
-      node.appendChild(label);
-      console.log(symbolTotal);
+  ;
+}
 
-      for (var i = 0; i < symbolTotal; i++) {
-        drawPersonSVG(node); //const symbol = document.createTextNode('<3')
-        //node.appendChild(symbol)
-      }
+;
 
-      ;
-      node.appendChild(totals);
-      graphContainer.appendChild(node);
-    });
-    console.log(data.reduce(reducer, 0));
+function createList(csvFile) {
+  var graphContainer = document.querySelector('#vis-container'); //const csvFile = document.getElementById('file-select').files[0];
+  // Take CSV, split into row objects, and push them into array
+
+  var data = d3.csvParse(csvFile);
+  console.log(data);
+  var columnOne = data.columns[0];
+  var columnTwo = data.columns[1]; // Get total counts from column two for use in percentages
+
+  var reducer = function reducer(accumulator, currentValue) {
+    return accumulator + parseInt(currentValue[columnTwo]);
+  };
+
+  var totalCount = data.reduce(reducer, 0);
+  data.forEach(function (element) {
+    var node = document.createElement('LI'); // Get each value to be normalized to a distribution between 1 and 20
+
+    var symbolTotal = Math.round(element[columnTwo] / totalCount * 20);
+    var label = document.createTextNode(element[columnOne] + ': ');
+    var totals = document.createTextNode('Totals:' + element[columnTwo] + '/' + totalCount + ')');
+    node.appendChild(label);
+    console.log(symbolTotal);
+
+    for (var i = 0; i < symbolTotal; i++) {
+      drawPersonSVG(node); //const symbol = document.createTextNode('<3')
+      //node.appendChild(symbol)
+    }
+
+    ;
+    node.appendChild(totals);
+    graphContainer.appendChild(node);
   });
+  console.log(data.reduce(reducer, 0));
 }
 
 function drawPersonSVG(target) {

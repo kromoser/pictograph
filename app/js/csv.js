@@ -1,13 +1,31 @@
 
+// handle upload button
+function upload_button(el, callback) {
+  var uploader = document.getElementById(el);
+  var reader = new FileReader();
+
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    callback(contents);
+  };
+
+  uploader.addEventListener("change", handleFiles, false);
+
+  function handleFiles() {
+    var file = this.files[0];
+    reader.readAsText(file);
+  };
+};
 
 
-
-function createList() {
+function createList(csvFile) {
 
   const graphContainer = document.querySelector('#vis-container');
+  //const csvFile = document.getElementById('file-select').files[0];
+
 
   // Take CSV, split into row objects, and push them into array
-  d3.csv('/app/csv/test.csv').then(function(data) {
+    var data = d3.csvParse(csvFile) 
 
     console.log(data);
 
@@ -21,8 +39,8 @@ function createList() {
 
     data.forEach(function(element) {
       const node = document.createElement('LI');
-      // Get each value to be normalized to a distribution between 1 and 10
-      const symbolTotal = Math.round(element[columnTwo]/totalCount * 10)
+      // Get each value to be normalized to a distribution between 1 and 20
+      const symbolTotal = Math.round(element[columnTwo]/totalCount * 20)
       const label = document.createTextNode(element[columnOne] + ': ');
       const totals = document.createTextNode('Totals:' + element[columnTwo] + '/' + totalCount + ')')
 
@@ -41,7 +59,7 @@ function createList() {
     });
 
     console.log(data.reduce(reducer,0));
-  });
+
 }
 
 function drawPersonSVG(target) {
