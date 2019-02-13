@@ -1,37 +1,22 @@
 
-// handle upload button
-function upload_button(el, callback) {
-  var uploader = document.getElementById(el);
-  var reader = new FileReader();
-
-  reader.onload = function(e) {
-    var contents = e.target.result;
-    callback(contents);
-  };
-
-  uploader.addEventListener("change", handleFiles, false);
-
-  function handleFiles() {
-    var file = this.files[0];
-    reader.readAsText(file);
-  };
-};
+function readFile(file, callbackFn) {
+  const reader = new FileReader();
+  reader.onload = callbackFn
+  reader.readAsText(file)
+}
 
 
-function createList(csvFile) {
 
-  const graphContainer = document.querySelector('#vis-container');
-  //const csvFile = document.getElementById('file-select').files[0];
+document.getElementById('file-select').addEventListener('change', function() {
+  const uploadedFile = this.files[0]
+  readFile(uploadedFile, function(e) {
+    const graphContainer = document.querySelector('#vis-container');
 
-
-  // Take CSV, split into row objects, and push them into array
-    var data = d3.csvParse(csvFile) 
-
-    console.log(data);
+    // Take CSV, split into row objects, and push them into array
+    var data = d3.csvParse(e.target.result)
 
     const columnOne = data.columns[0];
     const columnTwo = data.columns[1];
-
 
     // Get total counts from column two for use in percentages
     const reducer = (accumulator, currentValue) => accumulator + parseInt(currentValue[columnTwo])
@@ -40,7 +25,7 @@ function createList(csvFile) {
     data.forEach(function(element) {
       const node = document.createElement('LI');
       // Get each value to be normalized to a distribution between 1 and 20
-      const symbolTotal = Math.round(element[columnTwo]/totalCount * 20)
+      const symbolTotal = Math.round(element[columnTwo]/totalCount * 20) + 1 //This ensures a minimum of 1 symbol per row
       const label = document.createTextNode(element[columnOne] + ': ');
       const totals = document.createTextNode('Totals:' + element[columnTwo] + '/' + totalCount + ')')
 
@@ -59,8 +44,9 @@ function createList(csvFile) {
     });
 
     console.log(data.reduce(reducer,0));
+  })
+})
 
-}
 
 function drawPersonSVG(target) {
     d3.select(target)
