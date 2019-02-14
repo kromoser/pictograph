@@ -24,12 +24,19 @@ document.getElementById('file-select').addEventListener('change', function() {
 
     data.forEach(function(element) {
       const node = document.createElement('LI');
+      const labelNode = document.createElement('span');
+      const totalsNode = document.createElement('span');
       // Get each value to be normalized to a distribution between 1 and 20
       const symbolTotal = Math.round(element[columnTwo]/totalCount * 20) + 1 //This ensures a minimum of 1 symbol per row
       const label = document.createTextNode(element[columnOne] + ': ');
-      const totals = document.createTextNode('Totals:' + element[columnTwo] + '/' + totalCount + ')')
+      const totals = document.createTextNode('(Totals:' + element[columnTwo] + '/' + totalCount + ')')
 
-      node.appendChild(label);
+      node.classList.add('row')
+      labelNode.classList.add('row--label');
+      totalsNode.classList.add('row--totals');
+
+      labelNode.appendChild(label);
+      node.appendChild(labelNode);
 
       console.log(symbolTotal)
 
@@ -39,7 +46,8 @@ document.getElementById('file-select').addEventListener('change', function() {
         //node.appendChild(symbol)
       };
 
-      node.appendChild(totals)
+      totalsNode.appendChild(totals)
+      node.appendChild(totalsNode)
       graphContainer.appendChild(node)
     });
 

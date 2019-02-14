@@ -21,12 +21,19 @@ document.getElementById('file-select').addEventListener('change', function () {
 
     var totalCount = data.reduce(reducer, 0);
     data.forEach(function (element) {
-      var node = document.createElement('LI'); // Get each value to be normalized to a distribution between 1 and 20
+      var node = document.createElement('LI');
+      var labelNode = document.createElement('span');
+      var totalsNode = document.createElement('span'); // Get each value to be normalized to a distribution between 1 and 20
 
-      var symbolTotal = Math.round(element[columnTwo] / totalCount * 20) + 1;
+      var symbolTotal = Math.round(element[columnTwo] / totalCount * 20) + 1; //This ensures a minimum of 1 symbol per row
+
       var label = document.createTextNode(element[columnOne] + ': ');
-      var totals = document.createTextNode('Totals:' + element[columnTwo] + '/' + totalCount + ')');
-      node.appendChild(label);
+      var totals = document.createTextNode('(Totals:' + element[columnTwo] + '/' + totalCount + ')');
+      node.classList.add('row');
+      labelNode.classList.add('row--label');
+      totalsNode.classList.add('row--totals');
+      labelNode.appendChild(label);
+      node.appendChild(labelNode);
       console.log(symbolTotal);
 
       for (var i = 0; i < symbolTotal; i++) {
@@ -35,7 +42,8 @@ document.getElementById('file-select').addEventListener('change', function () {
       }
 
       ;
-      node.appendChild(totals);
+      totalsNode.appendChild(totals);
+      node.appendChild(totalsNode);
       graphContainer.appendChild(node);
     });
     console.log(data.reduce(reducer, 0));
