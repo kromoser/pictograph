@@ -33,10 +33,6 @@ h3 {
   margin: 4rem 0;
   text-align: center;
   display: none;
-
-  &.editing {
-    background: #F1E4E8
-  }
 }
 
 
@@ -87,13 +83,21 @@ ul#vis-container {
     div.row--label {
       flex-basis: 20%;
       text-align: right;
-      padding: 0 1.5rem 0 0;
+      margin: 0 1rem 0 0;
+      padding: 0 .25rem;
     }
 
     svg {
       width: 2rem;
       height: 2rem;
       transform: scale3d(2,2,2);
+
+      &:last-of-type {
+        // 30% is the height from top that it will be clipped. Should be controlled
+        // by the remainder of the percentage calc in the JS
+
+        clip-path: polygon(100% 30%, 100% 100%, 0% 100%, 0 30%);
+      }
     }
 
     span.row--totals {
@@ -103,4 +107,8 @@ ul#vis-container {
       letter-spacing: 0.1rem;
     }
   }
+}
+
+.editing {
+  background: #F1E4E8
 }

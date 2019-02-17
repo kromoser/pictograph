@@ -12,6 +12,7 @@ document.getElementById('file-select').addEventListener('change', function() {
   readFile(uploadedFile, function(e) {
     const graphContainer = document.querySelector('#vis-container');
 
+    graphContainer.innerHTML = ""
     // Take CSV, split into row objects, and push them into array
     var data = d3.csvParse(e.target.result)
 
@@ -53,7 +54,7 @@ document.getElementById('file-select').addEventListener('change', function() {
 
     //console.log(data.reduce(reducer,0));
 
-    addTitle();
+    customizeLabels();
   })
 })
 
@@ -82,16 +83,25 @@ function toggleTotals() {
     }
 }
 
-function addTitle() {
+function customizeLabels() {
   const graphTitle = document.querySelector('h3')
+  const labels = document.querySelectorAll('.row--label')
   graphTitle.style.display = 'initial'
+  labels.forEach(function(element) {
+    clickDetector(element)
+  })
+  clickDetector(graphTitle)
+
+}
+
+function clickDetector(element) {
   window.addEventListener('click', function(event){
-  if (graphTitle.contains(event.target)){
-    graphTitle.setAttribute('contenteditable', true)
-    graphTitle.classList.add('editing')
-  } else{
-    graphTitle.setAttribute('contenteditable', false)
-    graphTitle.classList.remove('editing')
-  }
-});
+    if (element.contains(event.target)){
+      event.target.setAttribute('contenteditable', true)
+      event.target.classList.add('editing')
+    } else{
+      element.setAttribute('contenteditable', false)
+      element.classList.remove('editing')
+    };
+  })
 }
