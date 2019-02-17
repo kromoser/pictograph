@@ -23,8 +23,8 @@ document.getElementById('file-select').addEventListener('change', function() {
     const totalCount = data.reduce(reducer,0);
 
     data.forEach(function(element) {
-      const node = document.createElement('LI');
-      const labelNode = document.createElement('span');
+      const node = document.createElement('li');
+      const labelNode = document.createElement('div');
       const totalsNode = document.createElement('span');
       // Get each value to be normalized to a distribution between 1 and 20
       const symbolTotal = Math.round(element[columnTwo]/totalCount * 20) + 1 //This ensures a minimum of 1 symbol per row
@@ -51,7 +51,9 @@ document.getElementById('file-select').addEventListener('change', function() {
       graphContainer.appendChild(node)
     });
 
-    console.log(data.reduce(reducer,0));
+    //console.log(data.reduce(reducer,0));
+
+    addTitle();
   })
 })
 
@@ -59,9 +61,37 @@ document.getElementById('file-select').addEventListener('change', function() {
 function drawPersonSVG(target) {
     d3.select(target)
       .append('svg')
-      .attr('width', 24)
-      .attr('height', 24)
+      //.attr('width', 24)
+      //.attr('height', 24)
       .append('path')
       .attr('d', 'M5,1C5,3.7 6.56,6.16 9,7.32V22H11V15H13V22H15V7.31C17.44,6.16 19,3.7 19,1H17A5,5 0 0,1 12,6A5,5 0 0,1 7,1M12,1C10.89,1 10,1.89 10,3C10,4.11 10.89,5 12,5C13.11,5 14,4.11 14,3C14,1.89 13.11,1 12,1Z')
       .style('fill', 'purple')
+}
+
+function toggleTotals() {
+  const totalsCheckbox = document.getElementById('totals-label')
+  const totalsLabels = document.querySelectorAll('.row--totals')
+    if ( totalsCheckbox.checked ) {
+      totalsLabels.forEach(function(element) {
+        element.style.display = 'initial';
+      })
+    } else {
+      totalsLabels.forEach(function(element) {
+        element.style.display = 'none';
+      })
+    }
+}
+
+function addTitle() {
+  const graphTitle = document.querySelector('h3')
+  graphTitle.style.display = 'initial'
+  window.addEventListener('click', function(event){
+  if (graphTitle.contains(event.target)){
+    graphTitle.setAttribute('contenteditable', true)
+    graphTitle.classList.add('editing')
+  } else{
+    graphTitle.setAttribute('contenteditable', false)
+    graphTitle.classList.remove('editing')
+  }
+});
 }

@@ -1,17 +1,30 @@
 <html>
   <head>
-    <script src="https://d3js.org/d3.v5.js"></script>
+  <link rel="stylesheet" href="dist/styles.css">
 
   </head>
 
   <body>
 
-    <h1>CSV to Pictograph</h1>
+    <div class="container">
+
+      <h1>CSV to Pictograph</h1>
+
+      <div class="options--row">
+        <input type="file" id="file-select">
+        <label for="file-select">Choose a file</label>
+
+        <input type="checkbox" id="totals-label" checked onchange="toggleTotals();">
+        <label for="totals-label">Show totals</label>
+      </div>
 
 
-    <input type="file" id="file-select">
-    <ul id="vis-container"></ul>
-    <script src="dist/all.js"></script>
+      <h3>Double click to add a title</h3>
+      <ul id="vis-container"></ul>
 
+    </div>
+
+    <script src="https://d3js.org/d3.v5.js"></script>
+    <script src="app/js/csv.js"></script>
   </body>
 </html>

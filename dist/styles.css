@@ -1,3 +1,77 @@
 * {
   margin: 0;
   padding: 0; }
+
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 60%;
+  margin: 4rem auto; }
+
+h1 {
+  text-align: center;
+  flex: 1 100%;
+  margin: 1.75rem 0 1.25rem;
+  font-family: "Proxima Nova", proxima-nova, Helvetica, sans-serif;
+  font-size: 4rem;
+  padding: .5rem 0; }
+
+h3 {
+  font-family: "Proxima Nova", proxima-nova, Helvetica, sans-serif;
+  font-size: 2rem;
+  flex: 1 100%;
+  margin: 4rem 0;
+  text-align: center;
+  display: none; }
+  h3.editing {
+    background: #F1E4E8; }
+
+.options--row {
+  position: relative; }
+
+#file-select, #totals-label {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1; }
+
+#file-select + label, #totals-label + label {
+  font-size: 1.25rem;
+  background: #3C887E;
+  border-radius: 2px;
+  color: #fff;
+  font-family: "Proxima Nova", proxima-nova, Helvetica, sans-serif;
+  padding: .5rem 1rem;
+  cursor: pointer;
+  margin: 0 1rem; }
+
+#totals-label + label {
+  background: #197BBD; }
+
+#totals-label:checked + label {
+  background: #125E8A; }
+
+ul#vis-container {
+  flex: 1 100%;
+  margin: .75rem 0; }
+  ul#vis-container li {
+    font-family: "Proxima Nova", proxima-nova, Helvetica, sans-serif;
+    font-size: 1.6rem;
+    display: flex;
+    padding: 1.25rem 0; }
+    ul#vis-container li div.row--label {
+      flex-basis: 20%;
+      text-align: right;
+      padding: 0 1.5rem 0 0; }
+    ul#vis-container li svg {
+      width: 2rem;
+      height: 2rem;
+      transform: scale3d(2, 2, 2); }
+    ul#vis-container li span.row--totals {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      font-weight: 300;
+      letter-spacing: 0.1rem; }
