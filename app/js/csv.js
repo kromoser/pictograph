@@ -1,19 +1,25 @@
+const fileInput = document.getElementById('file-select')
+const rangeSlider = document.getElementById('max-symbol-count')
 
+//Listen to change on file-select input and process the data in the file
+fileInput.addEventListener('change', processCSV)
+rangeSlider.addEventListener('input', processCSV)
+
+//Get uploaded CSV and parse it so d3 can use it
 function readFile(file, callbackFn) {
   const reader = new FileReader();
   reader.onload = callbackFn
   reader.readAsText(file)
 }
 
-
-
-document.getElementById('file-select').addEventListener('change', function() {
-  const uploadedFile = this.files[0]
+// Process the uploaded CSV with d3
+function processCSV() {
+  const uploadedFile = fileInput.files[0]
   readFile(uploadedFile, function(e) {
     const graphContainer = document.querySelector('#vis-container');
-
     graphContainer.innerHTML = ""
-    // Take CSV, split into row objects, and push them into array
+
+    // Take CSV, split into row objects, and push them into array. This is the data
     var data = d3.csvParse(e.target.result)
 
     const columnOne = data.columns[0];
@@ -22,19 +28,19 @@ document.getElementById('file-select').addEventListener('change', function() {
     // Get total counts from column two for use in percentages
     const reducer = (accumulator, currentValue) => accumulator + parseInt(currentValue[columnTwo])
     const totalCount = data.reduce(reducer,0);
-    const symbolValue = Math.round(totalCount / 30);
+
     const symbolKey = document.querySelector('#symbol-value')
+
+    // This is the number of units equal to one icon.
+    const symbolValue = calcSymbolTotal(totalCount)
+
 
     data.forEach(function(element) {
       const node = document.createElement('li');
       const labelNode = document.createElement('div');
       const totalsNode = document.createElement('span');
 
-      // Get each value to be normalized to a distribution between 1 and 20
-      //const symbolTotal = Math.round(element[columnTwo]/totalCount * 20) + 1 //This ensures a minimum of 1 symbol per row
-
       const symbolTotal = Math.round(element[columnTwo] / symbolValue)
-
 
       const label = document.createTextNode(element[columnOne] + ': ');
       const totals = document.createTextNode('(Totals:' + element[columnTwo] + '/' + totalCount + ')')
@@ -46,7 +52,6 @@ document.getElementById('file-select').addEventListener('change', function() {
       labelNode.appendChild(label);
       node.appendChild(labelNode);
 
-      console.log(symbolTotal)
 
       for ( let i = 0; i < symbolTotal; i++ ) {
         drawPersonSVG(node)
@@ -59,7 +64,6 @@ document.getElementById('file-select').addEventListener('change', function() {
       graphContainer.appendChild(node)
     });
 
-    //console.log(data.reduce(reducer,0));
 
 
     symbolKey.innerHTML = ""
@@ -71,7 +75,9 @@ document.getElementById('file-select').addEventListener('change', function() {
 
     customizeLabels();
   })
-})
+}
+
+
 
 
 function drawPersonSVG(target) {
@@ -121,4 +127,9 @@ function clickDetector(element) {
       element.classList.remove('editing')
     };
   })
+}
+
+function calcSymbolTotal(sumTotal) {
+  const sliderVal = document.querySelector('#max-symbol-count').value
+  return Math.round(sumTotal / sliderVal)
 }
