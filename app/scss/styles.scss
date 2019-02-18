@@ -32,6 +32,7 @@ h3 {
   flex: 1 100%;
   margin: 4rem 0;
   text-align: center;
+  min-height: 20px;
   display: none;
 }
 
@@ -87,18 +88,7 @@ ul#vis-container {
       padding: 0 .25rem;
     }
 
-    svg {
-      width: 2rem;
-      height: 2rem;
-      transform: scale3d(2,2,2);
 
-      &:last-of-type {
-        // 30% is the height from top that it will be clipped. Should be controlled
-        // by the remainder of the percentage calc in the JS
-
-        clip-path: polygon(100% 30%, 100% 100%, 0% 100%, 0 30%);
-      }
-    }
 
     span.row--totals {
       font-size: 1.1rem;
@@ -111,4 +101,21 @@ ul#vis-container {
 
 .editing {
   background: #F1E4E8
+}
+
+svg {
+  width: 2rem;
+  height: 2rem;
+  transform: scale3d(2,2,2);
+
+  &:last-of-type {
+    // 30% is the height from top that it will be clipped. Should be controlled
+    // by the remainder of the percentage calc in the JS
+
+    //clip-path: polygon(100% 30%, 100% 100%, 0% 100%, 0 30%);
+  }
+}
+
+p#symbol-value {
+  font-family: $sans;
 }

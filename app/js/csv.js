@@ -22,13 +22,20 @@ document.getElementById('file-select').addEventListener('change', function() {
     // Get total counts from column two for use in percentages
     const reducer = (accumulator, currentValue) => accumulator + parseInt(currentValue[columnTwo])
     const totalCount = data.reduce(reducer,0);
+    const symbolValue = Math.round(totalCount / 30);
+    const symbolKey = document.querySelector('#symbol-value')
 
     data.forEach(function(element) {
       const node = document.createElement('li');
       const labelNode = document.createElement('div');
       const totalsNode = document.createElement('span');
+
       // Get each value to be normalized to a distribution between 1 and 20
-      const symbolTotal = Math.round(element[columnTwo]/totalCount * 20) + 1 //This ensures a minimum of 1 symbol per row
+      //const symbolTotal = Math.round(element[columnTwo]/totalCount * 20) + 1 //This ensures a minimum of 1 symbol per row
+
+      const symbolTotal = Math.round(element[columnTwo] / symbolValue)
+
+
       const label = document.createTextNode(element[columnOne] + ': ');
       const totals = document.createTextNode('(Totals:' + element[columnTwo] + '/' + totalCount + ')')
 
@@ -53,6 +60,14 @@ document.getElementById('file-select').addEventListener('change', function() {
     });
 
     //console.log(data.reduce(reducer,0));
+
+
+    symbolKey.innerHTML = ""
+    drawPersonSVG(symbolKey)
+    const symbolLabelEl = document.createElement('span')
+    const symbolLabelText = document.createTextNode( symbolValue + ' units')
+    symbolLabelEl.appendChild(symbolLabelText)
+    symbolKey.appendChild(symbolLabelEl)
 
     customizeLabels();
   })
@@ -86,10 +101,12 @@ function toggleTotals() {
 function customizeLabels() {
   const graphTitle = document.querySelector('h3')
   const labels = document.querySelectorAll('.row--label')
+  const keyText = document.querySelector('#symbol-value span')
   graphTitle.style.display = 'initial'
   labels.forEach(function(element) {
     clickDetector(element)
   })
+  clickDetector(keyText)
   clickDetector(graphTitle)
 
 }

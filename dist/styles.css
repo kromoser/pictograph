@@ -23,6 +23,7 @@ h3 {
   flex: 1 100%;
   margin: 4rem 0;
   text-align: center;
+  min-height: 20px;
   display: none; }
 
 .options--row {
@@ -65,12 +66,6 @@ ul#vis-container {
       text-align: right;
       margin: 0 1rem 0 0;
       padding: 0 .25rem; }
-    ul#vis-container li svg {
-      width: 2rem;
-      height: 2rem;
-      transform: scale3d(2, 2, 2); }
-      ul#vis-container li svg:last-of-type {
-        clip-path: polygon(100% 30%, 100% 100%, 0% 100%, 0 30%); }
     ul#vis-container li span.row--totals {
       font-size: 1.1rem;
       text-transform: uppercase;
@@ -79,3 +74,11 @@ ul#vis-container {
 
 .editing {
   background: #F1E4E8; }
+
+svg {
+  width: 2rem;
+  height: 2rem;
+  transform: scale3d(2, 2, 2); }
+
+p#symbol-value {
+  font-family: "Proxima Nova", proxima-nova, Helvetica, sans-serif; }
