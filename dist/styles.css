@@ -6,7 +6,7 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  width: 70%;
+  width: 90%;
   margin: 4rem auto; }
 
 h1 {
@@ -53,20 +53,23 @@ h3 {
 #totals-label:checked + label {
   background: #125E8A; }
 
-ul#vis-container {
-  flex: 1 100%;
+ul.graph-container {
   margin: .75rem 0; }
-  ul#vis-container li {
+  ul.graph-container#vis-container {
+    flex: 0 75%; }
+  ul.graph-container#unit-comparison {
+    flex: 0 25%; }
+  ul.graph-container li {
     font-family: "Proxima Nova", proxima-nova, Helvetica, sans-serif;
     font-size: 1.6rem;
     display: flex;
     padding: 1.25rem 0; }
-    ul#vis-container li div.row--label {
+    ul.graph-container li div.row--label {
       flex-basis: 20%;
       text-align: right;
       margin: 0 1rem 0 0;
       padding: 0 .25rem; }
-    ul#vis-container li span.row--totals {
+    ul.graph-container li span.row--totals {
       font-size: 1.1rem;
       text-transform: uppercase;
       font-weight: 300;

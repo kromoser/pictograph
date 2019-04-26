@@ -9,7 +9,7 @@ $sans: 'Proxima Nova', proxima-nova, Helvetica, sans-serif;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  width: 70%;
+  width: 90%;
   margin: 4rem auto;
 }
 
@@ -70,9 +70,16 @@ h3 {
   background: #125E8A;
 }
 
-ul#vis-container {
-  flex: 1 100%;
+ul.graph-container {
   margin: .75rem 0;
+
+  &#vis-container {
+    flex: 0 75%;
+  }
+
+  &#unit-comparison {
+    flex: 0 25%;
+  }
 
   li {
     font-family: $sans;

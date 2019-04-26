@@ -17,7 +17,9 @@ function processCSV() {
   const uploadedFile = fileInput.files[0]
   readFile(uploadedFile, function(e) {
     const graphContainer = document.querySelector('#vis-container');
-    graphContainer.innerHTML = ""
+    const comparisonContainer = document.querySelector('#unit-comparison');
+    graphContainer.innerHTML = '';
+    comparisonContainer.innerHTML = '';
 
     // Take CSV, split into row objects, and push them into array. This is the data
     var data = d3.csvParse(e.target.result)
@@ -36,6 +38,7 @@ function processCSV() {
 
 
     data.forEach(function(element) {
+      // This is for the actual values
       const node = document.createElement('li');
       const labelNode = document.createElement('div');
       const totalsNode = document.createElement('span');
@@ -45,13 +48,13 @@ function processCSV() {
       const label = document.createTextNode(element[columnOne] + ': ');
       const totals = document.createTextNode('(Totals:' + element[columnTwo] + '/' + totalCount + ')')
 
+
       node.classList.add('row')
       labelNode.classList.add('row--label');
       totalsNode.classList.add('row--totals');
 
       labelNode.appendChild(label);
       node.appendChild(labelNode);
-
 
       for ( let i = 0; i < symbolTotal; i++ ) {
         drawPersonSVG(node)
@@ -62,6 +65,13 @@ function processCSV() {
       totalsNode.appendChild(totals)
       node.appendChild(totalsNode)
       graphContainer.appendChild(node)
+
+      // This is for the value comparison
+      const comparisonNode = document.createElement('li');
+      drawPersonSVG(comparisonNode);
+      comparisonContainer.appendChild(comparisonNode)
+
+
     });
 
 
