@@ -14,6 +14,7 @@ function readFile(file, callbackFn) {
 
 // Process the uploaded CSV with d3
 function processCSV() {
+  const selectedColor = document.querySelector('#color-selector').value;
   const uploadedFile = fileInput.files[0]
   readFile(uploadedFile, function(e) {
     const graphContainer = document.querySelector('#vis-container');
@@ -41,35 +42,48 @@ function processCSV() {
       // This is for the actual values
       const node = document.createElement('li');
       const labelNode = document.createElement('div');
+      const svgContainer = document.createElement('div');
       const totalsNode = document.createElement('span');
 
       const symbolTotal = Math.round(element[columnTwo] / symbolValue)
 
       const label = document.createTextNode(element[columnOne] + ': ');
-      const totals = document.createTextNode('(Totals:' + element[columnTwo] + '/' + totalCount + ')')
+      const totals = document.createTextNode('Total: ' + element[columnTwo] + '/' + totalCount )
 
 
       node.classList.add('row')
       labelNode.classList.add('row--label');
+      svgContainer.classList.add('svg--container')
       totalsNode.classList.add('row--totals');
 
       labelNode.appendChild(label);
       node.appendChild(labelNode);
+      node.appendChild(svgContainer);
 
       for ( let i = 0; i < symbolTotal; i++ ) {
-        drawPersonSVG(node)
+        drawPersonSVG(svgContainer,selectedColor)
         //const symbol = document.createTextNode('<3')
         //node.appendChild(symbol)
       };
 
       totalsNode.appendChild(totals)
-      node.appendChild(totalsNode)
+      svgContainer.appendChild(totalsNode)
       graphContainer.appendChild(node)
 
       // This is for the value comparison
       const comparisonNode = document.createElement('li');
-      drawPersonSVG(comparisonNode);
+      const comparisonUnitsSpan = document.createElement('span');
+      const comparisonLabel = document.createTextNode('For every 1 unit');
+      //const comparisonUnitsLabel = document.createTextNode(' unit');
+
+      drawPersonSVG(comparisonNode,selectedColor);
       comparisonContainer.appendChild(comparisonNode)
+
+      comparisonNode.appendChild(comparisonLabel);
+      //comparisonUnitsSpan.appendChild(comparisonUnitsLabel);
+      comparisonNode.appendChild(comparisonUnitsSpan);
+
+
 
 
     });
@@ -77,7 +91,7 @@ function processCSV() {
 
 
     symbolKey.innerHTML = ""
-    drawPersonSVG(symbolKey)
+    drawPersonSVG(symbolKey, document.querySelector('#color-selector').value)
     const symbolLabelEl = document.createElement('span')
     const symbolLabelText = document.createTextNode( symbolValue + ' units')
     symbolLabelEl.appendChild(symbolLabelText)
@@ -90,14 +104,14 @@ function processCSV() {
 
 
 
-function drawPersonSVG(target) {
+function drawPersonSVG(target,selectedColor) {
     d3.select(target)
       .append('svg')
-      //.attr('width', 24)
+      //.attr('viewBox', '0 0 100 100')
       //.attr('height', 24)
       .append('path')
       .attr('d', 'M5,1C5,3.7 6.56,6.16 9,7.32V22H11V15H13V22H15V7.31C17.44,6.16 19,3.7 19,1H17A5,5 0 0,1 12,6A5,5 0 0,1 7,1M12,1C10.89,1 10,1.89 10,3C10,4.11 10.89,5 12,5C13.11,5 14,4.11 14,3C14,1.89 13.11,1 12,1Z')
-      .style('fill', 'purple')
+      .style('fill', selectedColor)
 }
 
 function toggleTotals() {
@@ -111,6 +125,17 @@ function toggleTotals() {
       totalsLabels.forEach(function(element) {
         element.style.display = 'none';
       })
+    }
+}
+
+function toggleRightColumn() {
+  const columnCheckbox = document.getElementById('right-column-toggle')
+  const rightColumn = document.querySelector('#unit-comparison')
+    if ( columnCheckbox.checked ) {
+      rightColumn.style.display = 'initial';
+
+    } else {
+      rightColumn.style.display = 'none';
     }
 }
 
@@ -138,6 +163,17 @@ function clickDetector(element) {
     };
   })
 }
+
+function changeSVGColor() {
+  const colorSelector = document.querySelector('#color-selector');
+  const selectedColor = colorSelector.value
+  const allPaths = document.querySelectorAll('path');
+  allPaths.forEach(function(path) {
+    path.style.fill = selectedColor;
+  })
+}
+
+
 
 function calcSymbolTotal(sumTotal) {
   const sliderVal = document.querySelector('#max-symbol-count').value

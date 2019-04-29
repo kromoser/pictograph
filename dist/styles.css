@@ -27,9 +27,11 @@ h3 {
   display: none; }
 
 .options--row {
+  flex: 1 100%;
+  text-align: center;
   position: relative; }
 
-#file-select, #totals-label {
+#file-select, #totals-label, #right-column-toggle {
   width: 0.1px;
   height: 0.1px;
   opacity: 0;
@@ -37,7 +39,7 @@ h3 {
   position: absolute;
   z-index: -1; }
 
-#file-select + label, #totals-label + label {
+#file-select + label, #totals-label + label, #right-column-toggle + label {
   font-size: 1.25rem;
   background: #3C887E;
   border-radius: 2px;
@@ -47,33 +49,39 @@ h3 {
   cursor: pointer;
   margin: 0 1rem; }
 
-#totals-label + label {
+#totals-label + label, #right-column-toggle + label {
   background: #197BBD; }
 
-#totals-label:checked + label {
+#totals-label:checked + label, #right-column-toggle:checked + label {
   background: #125E8A; }
 
 ul.graph-container {
-  margin: .75rem 0; }
+  margin: .75rem 0;
+  list-style: none; }
   ul.graph-container#vis-container {
-    flex: 0 75%; }
+    flex-grow: 1; }
   ul.graph-container#unit-comparison {
-    flex: 0 25%; }
+    flex-grow: 1; }
   ul.graph-container li {
     font-family: "Proxima Nova", proxima-nova, Helvetica, sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     display: flex;
+    flex-wrap: wrap;
     padding: 1.25rem 0; }
     ul.graph-container li div.row--label {
       flex-basis: 20%;
       text-align: right;
       margin: 0 1rem 0 0;
-      padding: 0 .25rem; }
-    ul.graph-container li span.row--totals {
-      font-size: 1.1rem;
+      padding: 0 .25rem;
+      box-sizing: border-box; }
+    ul.graph-container li .svg--container {
+      flex-basis: 75%; }
+    ul.graph-container li .row--totals {
+      font-size: 0.85rem;
       text-transform: uppercase;
       font-weight: 300;
-      letter-spacing: 0.1rem; }
+      position: relative;
+      vertical-align: top; }
 
 .editing {
   background: #F1E4E8; }
@@ -83,5 +91,14 @@ svg {
   height: 2rem;
   transform: scale3d(2, 2, 2); }
 
+#unit-comparison li {
+  font-size: 0.75rem;
+  font-weight: 300;
+  padding-top: 1.25rem; }
+
 p#symbol-value {
-  font-family: "Proxima Nova", proxima-nova, Helvetica, sans-serif; }
+  font-family: "Proxima Nova", proxima-nova, Helvetica, sans-serif;
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 2rem auto; }
