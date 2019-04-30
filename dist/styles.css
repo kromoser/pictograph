@@ -81,20 +81,22 @@ ul.graph-container {
       text-transform: uppercase;
       font-weight: 300;
       position: relative;
-      vertical-align: top; }
+      vertical-align: top;
+      margin-left: 1.25rem; }
 
 .editing {
   background: #F1E4E8; }
 
 svg {
-  width: 2rem;
-  height: 2rem;
-  transform: scale3d(2, 2, 2); }
+  width: 3.5rem;
+  margin-right: -1.25rem; }
 
 #unit-comparison li {
   font-size: 0.75rem;
   font-weight: 300;
   padding-top: 1.25rem; }
+  #unit-comparison li div {
+    padding-right: 1.25rem; }
 
 p#symbol-value {
   font-family: "Proxima Nova", proxima-nova, Helvetica, sans-serif;

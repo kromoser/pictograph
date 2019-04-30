@@ -46,6 +46,9 @@ function processCSV() {
       const totalsNode = document.createElement('span');
 
       const symbolTotal = Math.round(element[columnTwo] / symbolValue)
+      const symbolRemainder = ( element[columnTwo] % symbolValue ) / symbolValue;
+
+      //console.log(symbolRemainder)
 
       const label = document.createTextNode(element[columnOne] + ': ');
       const totals = document.createTextNode('Total: ' + element[columnTwo] + '/' + totalCount )
@@ -60,7 +63,7 @@ function processCSV() {
       node.appendChild(labelNode);
       node.appendChild(svgContainer);
 
-      for ( let i = 0; i < symbolTotal; i++ ) {
+      for ( let i = 0; i < symbolTotal + 1; i++ ) {
         drawPersonSVG(svgContainer,selectedColor)
         //const symbol = document.createTextNode('<3')
         //node.appendChild(symbol)
@@ -72,11 +75,29 @@ function processCSV() {
 
       // This is for the value comparison
       const comparisonNode = document.createElement('li');
+      const comparisonSVGContainer = document.createElement('div');
       const comparisonUnitsSpan = document.createElement('span');
       const comparisonLabel = document.createTextNode('For every 1 unit');
       //const comparisonUnitsLabel = document.createTextNode(' unit');
 
-      drawPersonSVG(comparisonNode,selectedColor);
+      drawPersonSVG(comparisonSVGContainer,selectedColor);
+
+      // Set the clip path on the last SVG path according to the remainder calculated above. This creates the partial person graphic.
+        const lastSVG = node.querySelector('#vis-container svg:last-of-type');
+
+        if ( symbolRemainder ) {
+
+          const lastSVGPath = node.querySelector('#vis-container svg:last-of-type path');
+          const fullSVGPath = lastSVG.cloneNode(true);
+          fullSVGPath.style.opacity = '0.25';
+          lastSVG.appendChild(fullSVGPath);
+          lastSVGPath.style.clipPath = `inset(${100 - symbolRemainder * 100}% 0 0 0)`;
+          //console.log(lastSVG)
+        } else {
+            lastSVG.style.display = 'none';
+        }
+
+      comparisonNode.appendChild(comparisonSVGContainer)
       comparisonContainer.appendChild(comparisonNode)
 
       comparisonNode.appendChild(comparisonLabel);
@@ -107,7 +128,7 @@ function processCSV() {
 function drawPersonSVG(target,selectedColor) {
     d3.select(target)
       .append('svg')
-      //.attr('viewBox', '0 0 100 100')
+      .attr('viewBox', '0 0 24 24')
       //.attr('height', 24)
       .append('path')
       .attr('d', 'M5,1C5,3.7 6.56,6.16 9,7.32V22H11V15H13V22H15V7.31C17.44,6.16 19,3.7 19,1H17A5,5 0 0,1 12,6A5,5 0 0,1 7,1M12,1C10.89,1 10,1.89 10,3C10,4.11 10.89,5 12,5C13.11,5 14,4.11 14,3C14,1.89 13.11,1 12,1Z')

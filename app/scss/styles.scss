@@ -115,6 +115,7 @@ ul.graph-container {
       font-weight: 300;
       position: relative;
       vertical-align: top;
+      margin-left: 1.25rem;
       //top: -5px;
       //letter-spacing: 0.1rem;
     }
@@ -126,15 +127,17 @@ ul.graph-container {
 }
 
 svg {
-  width: 2rem;
-  height: 2rem;
-  transform: scale3d(2,2,2);
+  width: 3.5rem;
+  //height: 2rem;
+  //transform: scale3d(2,2,2);
+  margin-right: -1.25rem;
 
   &:last-of-type {
     // 30% is the height from top that it will be clipped. Should be controlled
     // by the remainder of the percentage calc in the JS
 
     //clip-path: polygon(100% 30%, 100% 100%, 0% 100%, 0 30%);
+    //clip-path: inset(100% 30% 100% 30%)
   }
 }
 
@@ -143,6 +146,10 @@ svg {
   //text-transform: uppercase;
   font-weight: 300;
   padding-top: 1.25rem;
+
+  div {
+    padding-right: 1.25rem;
+  }
 }
 
 p#symbol-value {
